@@ -25,7 +25,6 @@ transfer_dict = {
     },
     "dirs": folders_dict
 }
-print(transfer_dict)
 
 
 # Transfer based on https://stackoverflow.com/questions/7029702/script-to-move-messages-from-one-imap-server-to-another
