@@ -4,6 +4,27 @@ import os
 
 
 # Load Config From Environment
+server_one_str = os.environ["SERVERONE"]
+server_one_lst = server_one_str.split(";")
+server_two_str = os.environ["SERVERTWO"]
+server_two_lst = server_two_str.split(";")
+folders_str = os.environ["FOLDERS"]
+folders_dict = {el[0]: el[1] for el [s.split(":") for s in folders_str.split(";")]}
+
+
+transfer_dict = {
+    "server_from": {
+        "host": server_one_lst[0],
+        "username": server_one_lst[1],
+        "password": server_one_lst[2]
+    }, 
+    "server_to": {
+        "host": server_two_lst[0],
+        "username": server_two_lst[1],
+        "password": server_two_lst[2],
+    },
+    "dirs": folders_dict
+}
 transfer_dict = json.loads(os.environ["EMAILSYNC"])
 print(transfer_dict)
 
