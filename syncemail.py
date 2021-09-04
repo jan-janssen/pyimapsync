@@ -5,6 +5,7 @@ import os
 
 # Load Config From Environment
 transfer_dict = json.loads(os.environ["EMAILSYNC"])
+print(transfer_dict)
 
 
 # Transfer based on https://stackoverflow.com/questions/7029702/script-to-move-messages-from-one-imap-server-to-another
