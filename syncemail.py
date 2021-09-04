@@ -25,7 +25,6 @@ transfer_dict = {
     },
     "dirs": folders_dict
 }
-transfer_dict = json.loads(os.environ["EMAILSYNC"])
 print(transfer_dict)
 
 
