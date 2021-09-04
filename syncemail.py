@@ -9,7 +9,7 @@ server_one_lst = server_one_str.split(";")
 server_two_str = os.environ["SERVERTWO"]
 server_two_lst = server_two_str.split(";")
 folders_str = os.environ["FOLDERS"]
-folders_dict = {el[0]: el[1] for el [s.split(":") for s in folders_str.split(";")]}
+folders_dict = {el[0]: el[1] for el in [s.split(":") for s in folders_str.split(";")]}
 
 
 transfer_dict = {
