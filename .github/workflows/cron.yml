@@ -17,4 +17,6 @@ jobs:
           python-version: '3.9'
       - run: python syncemail.py
         env:
-          EMAILSYNC: ${{ secrets.EMAILSYNC }}
+          FOLDERS: ${{ secrets.FOLDERS }}
+          SERVERONE: ${{ secrets.SERVERONE }}
+          SERVERTWO: ${{ secrets.SERVERTWO }}
