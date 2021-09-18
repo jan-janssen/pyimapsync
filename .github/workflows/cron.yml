@@ -18,6 +18,11 @@ jobs:
       - run: pip install .
       - run: pyimapsync --server_from ${SERVERFROM} --server_to ${SERVERTO} --inboxes ${FOLDERS}
         env:
-          FOLDERS: ${{ secrets.FOLDERS }}
-          SERVERFROM: ${{ secrets.SERVERONE }}
-          SERVERTO: ${{ secrets.SERVERTWO }}
+          FOLDERS: ${{ secrets.FOLDERS_1 }}
+          SERVERFROM: ${{ secrets.SERVER_FROM_1 }}
+          SERVERTO: ${{ secrets.SERVER_TO_1 }}
+      - run: pyimapsync --server_from ${SERVERFROM} --server_to ${SERVERTO} --inboxes ${FOLDERS}
+        env:
+          FOLDERS: ${{ secrets.FOLDERS_2 }}
+          SERVERFROM: ${{ secrets.SERVER_FROM_2 }}
+          SERVERTO: ${{ secrets.SERVER_TO_1 }}
