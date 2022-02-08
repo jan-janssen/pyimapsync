@@ -27,35 +27,31 @@ def transfer_emails(transfer_dict):
     """
     transfer_dict = _add_ports_to_transferdict(transfer_dict)
     with imaplib.IMAP4_SSL(
-            host=transfer_dict["server_from"]["host"],
-            port=transfer_dict["server_from"]["port"]
+        host=transfer_dict["server_from"]["host"],
+        port=transfer_dict["server_from"]["port"],
     ) as server_from:
         server_from.login(
             transfer_dict["server_from"]["username"],
-            transfer_dict["server_from"]["password"]
+            transfer_dict["server_from"]["password"],
         )
         with imaplib.IMAP4_SSL(
-                host=transfer_dict["server_to"]["host"],
-                port=transfer_dict["server_from"]["port"]
+            host=transfer_dict["server_to"]["host"],
+            port=transfer_dict["server_from"]["port"],
         ) as server_to:
             server_to.login(
                 transfer_dict["server_to"]["username"],
-                transfer_dict["server_to"]["password"]
+                transfer_dict["server_to"]["password"],
             )
             for dir_from, dir_to in transfer_dict["dirs"].items():
-                _ = server_from.select(
-                    dir_from,
-                    readonly=False
-                )
-                print('Fetching messages from \'%s\'...' % dir_from)
-                resp, items = server_from.search(None, 'ALL')
+                _ = server_from.select(dir_from, readonly=False)
+                print("Fetching messages from '%s'..." % dir_from)
+                resp, items = server_from.search(None, "ALL")
                 msg_nums = items[0].split()
-                print('%s messages to archive' % len(msg_nums))
+                print("%s messages to archive" % len(msg_nums))
 
                 for msg_num in msg_nums:
                     resp, data = server_from.fetch(
-                        msg_num,
-                        "(FLAGS INTERNALDATE BODY.PEEK[])"
+                        msg_num, "(FLAGS INTERNALDATE BODY.PEEK[])"
                     )
                     message = data[0][1]
                     flags = imaplib.ParseFlags(data[0][0])
@@ -64,27 +60,16 @@ def transfer_emails(transfer_dict):
                     else:
                         flag_str = b""
                     date = imaplib.Time2Internaldate(
-                        imaplib.Internaldate2tuple(
-                            data[0][0]
-                        )
+                        imaplib.Internaldate2tuple(data[0][0])
                     )
-                    copy_result = server_to.append(
-                        dir_to,
-                        flag_str,
-                        date,
-                        message
-                    )
+                    copy_result = server_to.append(dir_to, flag_str, date, message)
 
-                    if copy_result[0] == 'OK':
-                        _ = server_from.store(
-                            msg_num,
-                            '+FLAGS',
-                            '\\Deleted'
-                        )
+                    if copy_result[0] == "OK":
+                        _ = server_from.store(msg_num, "+FLAGS", "\\Deleted")
 
                 ex = server_from.expunge()
-                print('expunge status: %s' % ex[0])
+                print("expunge status: %s" % ex[0])
                 if not ex[1][0]:
-                    print('expunge count: 0')
+                    print("expunge count: 0")
                 else:
-                    print('expunge count: %s' % len(ex[1]))
+                    print("expunge count: %s" % len(ex[1]))
