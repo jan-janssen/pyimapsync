@@ -9,7 +9,7 @@ setup(
     name='pyimapsync',
     version=versioneer.get_version(),
     description='Transfer emails between multiple IMAP servers.',
-    url='https://github.com/jan-janssen/pysyncimap',
+    url='https://github.com/pyscioffice/pysyncimap',
     author='Jan Janssen',
     author_email='jan.janssen@outlook.com',
     license='BSD',
